@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export default async function TenantDetailPage({
   params,
