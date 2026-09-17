@@ -26,8 +26,23 @@ export async function createItem(formData: FormData) {
   const price = priceStr ? parseFloat(priceStr) : null;
   const isActive = isActiveStr === "true";
   
+  let finalImageUrl = formData.get("imageUrl") as string;
+  const imageFile = formData.get("imageFile") as File;
+
+  if (imageFile && imageFile.size > 0) {
+    const bytes = await imageFile.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    try {
+      const { uploadToGoogleDrive } = await import("@/lib/gdrive");
+      finalImageUrl = await uploadToGoogleDrive(buffer, imageFile.name, imageFile.type);
+    } catch (e) {
+      console.error("Failed to upload image to GDrive:", e);
+      // optionally fallback to generic placeholder or throw error
+    }
+  }
+  
   // Format image as JSON array of 1 string if provided
-  const images = imageUrl ? JSON.stringify([imageUrl]) : null;
+  const images = finalImageUrl ? JSON.stringify([finalImageUrl]) : null;
 
   // Generate simple slug
   const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');

@@ -40,6 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# database
+# Prisma
 prisma/*.db
+
+# Credentials
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!next-env.d.ts
 prisma/*.db-journal

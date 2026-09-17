@@ -19,8 +19,21 @@ export async function createTenant(formData: FormData) {
   const type = formData.get("type") as string;
   const description = formData.get("description") as string;
   const waNumber = formData.get("waNumber") as string;
-  const logoUrl = formData.get("logoUrl") as string;
   const address = formData.get("address") as string;
+  
+  let logoUrl = formData.get("logoUrl") as string;
+  const imageFile = formData.get("imageFile") as File;
+
+  if (imageFile && imageFile.size > 0) {
+    const bytes = await imageFile.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    try {
+      const { uploadToGoogleDrive } = await import("@/lib/gdrive");
+      logoUrl = await uploadToGoogleDrive(buffer, imageFile.name, imageFile.type);
+    } catch (e) {
+      console.error("Failed to upload image to GDrive:", e);
+    }
+  }
 
   // Generate simple slug
   const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');

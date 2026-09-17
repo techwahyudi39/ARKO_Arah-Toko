@@ -15,7 +15,7 @@ export default function NewTenantPage() {
       </div>
 
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <form action={createTenant} className="space-y-6">
+        <form action={createTenant} className="space-y-6" encType="multipart/form-data">
           <div className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nama Tenant</label>
@@ -41,7 +41,13 @@ export default function NewTenantPage() {
             </div>
 
             <div>
-              <label htmlFor="logoUrl" className="block text-sm font-medium text-gray-700">Logo URL (opsional, Direct Link GDrive/Unsplash)</label>
+              <label htmlFor="imageFile" className="block text-sm font-medium text-gray-700">Upload Logo/Banner (Google Drive)</label>
+              <input type="file" name="imageFile" id="imageFile" accept="image/*" className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+              <p className="mt-1 text-xs text-gray-500">Atau, masukkan URL langsung di bawah jika tidak ingin upload:</p>
+            </div>
+
+            <div>
+              <label htmlFor="logoUrl" className="block text-sm font-medium text-gray-700">Logo URL (opsional)</label>
               <input type="url" name="logoUrl" id="logoUrl" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
             </div>
 
